@@ -18,12 +18,12 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.Modifier.Companion
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.hcy.composelearn.data.SampleData
 import com.hcy.composelearn.ui.theme.ComposeLearnTheme
 
@@ -45,8 +45,11 @@ class MainActivity : ComponentActivity() {
 //                    )
 //                )
 //            }
-            ComposeLearnTheme() {
-                Conversation(messages = SampleData.conversationSample)
+            ComposeLearnTheme {
+//                Conversation(messages = SampleData.conversationSample)
+
+                HellowScreen(viewModel())
+
             }
         }
     }
@@ -102,7 +105,9 @@ fun MessageCard(msg: Message) {
             Spacer(modifier = Modifier.height(4.dp))
             Surface(shape = MaterialTheme.shapes.medium, elevation = 1.dp,
             color = sufaceColor,
-            modifier = Modifier.animateContentSize().padding(1.dp)) {
+            modifier = Modifier
+                .animateContentSize()
+                .padding(1.dp)) {
                 Text(
                     text = msg.body,
                     maxLines = if (isEzpanded) Int.MAX_VALUE else 1,
