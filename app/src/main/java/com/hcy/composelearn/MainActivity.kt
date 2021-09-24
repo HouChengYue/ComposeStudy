@@ -143,7 +143,7 @@ fun PreviewMessageCard() {
 data class Message(val author: String, val body: String)
 
 @Composable
-fun Conversation(messages: List<Message>) {
+fun Conversation(messages: ArrayList<Message>) {
     LazyColumn() {
         items(messages) { item ->
             MessageCard(msg = item)

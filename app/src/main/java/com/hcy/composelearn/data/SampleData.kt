@@ -10,7 +10,7 @@ import com.hcy.composelearn.Message
 
 object SampleData {
     // Sample conversation data
-    val conversationSample = listOf(
+    val conversationSample = arrayListOf(
         Message(
             "Colleague",
             "Test...Test...Test..."
