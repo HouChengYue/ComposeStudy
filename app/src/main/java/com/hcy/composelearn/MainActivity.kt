@@ -25,6 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hcy.composelearn.data.SampleData
 import com.hcy.composelearn.ui.theme.ComposeLearnTheme
+import com.hcy.composelearn.ui.theme.SimpleText
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,13 +49,16 @@ class MainActivity : ComponentActivity() {
 //                Conversation(messages = SampleData.conversationSample)
 
 //                HellowScreen(viewModel())
-                MessageList(
-                    msg = arrayListOf<Message>().apply {
-                        addAll(SampleData.conversationSample)
-                        addAll(SampleData.conversationSample)
-                        addAll(SampleData.conversationSample)
-                    }
-                )
+
+//                MessageList(
+//                    msg = arrayListOf<Message>().apply {
+//                        addAll(SampleData.conversationSample)
+//                        addAll(SampleData.conversationSample)
+//                        addAll(SampleData.conversationSample)
+//                    }
+//                )
+
+                SimpleText()
 
             }
         }
