@@ -23,7 +23,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.hcy.composelearn.data.SampleData
 import com.hcy.composelearn.ui.theme.ComposeLearnTheme
 
@@ -48,7 +47,14 @@ class MainActivity : ComponentActivity() {
             ComposeLearnTheme {
 //                Conversation(messages = SampleData.conversationSample)
 
-                HellowScreen(viewModel())
+//                HellowScreen(viewModel())
+                MessageList(
+                    msg = arrayListOf<Message>().apply {
+                        addAll(SampleData.conversationSample)
+                        addAll(SampleData.conversationSample)
+                        addAll(SampleData.conversationSample)
+                    }
+                )
 
             }
         }
@@ -75,7 +81,7 @@ fun MessageCard(msg: Message) {
             painter = painterResource(id = R.drawable.profile_picture),
             contentDescription = "Contact profile picture",
             modifier = Modifier
-                .size(40.dp)
+                .requiredSize(40.dp)
                 .clip(CircleShape)
                 .border(1.5.dp, MaterialTheme.colors.secondary, CircleShape)
         )
