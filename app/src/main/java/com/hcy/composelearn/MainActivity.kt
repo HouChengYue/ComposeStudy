@@ -58,7 +58,8 @@ class MainActivity : ComponentActivity() {
 //                    }
 //                )
 
-                SimpleText()
+//                SimpleText()
+                ImageSample(modifier = Modifier.fillMaxSize())
 
             }
         }
@@ -113,11 +114,13 @@ fun MessageCard(msg: Message) {
                 style = MaterialTheme.typography.subtitle2
             )
             Spacer(modifier = Modifier.height(4.dp))
-            Surface(shape = MaterialTheme.shapes.medium, elevation = 1.dp,
-            color = sufaceColor,
-            modifier = Modifier
-                .animateContentSize()
-                .padding(1.dp)) {
+            Surface(
+                shape = MaterialTheme.shapes.medium, elevation = 1.dp,
+                color = sufaceColor,
+                modifier = Modifier
+                    .animateContentSize()
+                    .padding(1.dp)
+            ) {
                 Text(
                     text = msg.body,
                     maxLines = if (isEzpanded) Int.MAX_VALUE else 1,

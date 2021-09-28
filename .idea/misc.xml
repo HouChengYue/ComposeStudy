@@ -3,6 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../../layout/compose-model-1632281947830.xml" value="0.27744932432432434" />
+        <entry key="../../../../../layout/compose-model-1632288000269.xml" value="0.67" />
+        <entry key="../../../../../layout/compose-model-1632360663981.xml" value="0.287962962962963" />
+        <entry key="../../../../../layout/compose-model-1632799389205.xml" value="0.25" />
+        <entry key="../../../../../layout/compose-model-1632799538107.xml" value="0.26646959459459457" />
+        <entry key="../../../../../layout/compose-model-1632799766332.xml" value="0.2284887924801157" />
         <entry key="../../../../layout/compose-model-1631759142374.xml" value="0.11944444444444445" />
         <entry key="../../../../layout/compose-model-1631760096631.xml" value="0.23635706541380558" />
         <entry key="../../../../layout/compose-model-1631780939776.xml" value="0.11574074074074074" />
@@ -14,7 +20,6 @@
         <entry key="../../../../layout/compose-model-1631783832404.xml" value="0.6797066014669927" />
         <entry key="../../../../layout/compose-model-1631869179937.xml" value="0.30784708249496984" />
         <entry key="../../../../layout/compose-model-1631926314627.xml" value="0.7867132867132867" />
-        <entry key="..\:/Android/AndroidProJect/ComposeStudy/app/src/main/res/drawable/ic_baseline_arrow_upward_24.xml" value="0.111" />
       </map>
     </option>
   </component>
