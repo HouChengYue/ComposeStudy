@@ -4,6 +4,7 @@ import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
@@ -28,6 +29,7 @@ import com.hcy.composelearn.ui.theme.ComposeLearnTheme
 import com.hcy.composelearn.ui.theme.SimpleText
 
 class MainActivity : ComponentActivity() {
+    @ExperimentalAnimationApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -59,7 +61,8 @@ class MainActivity : ComponentActivity() {
 //                )
 
 //                SimpleText()
-                ImageSample(modifier = Modifier.fillMaxSize())
+//                ImageSample(modifier = Modifier.fillMaxSize())
+                animateSimple()
 
             }
         }
