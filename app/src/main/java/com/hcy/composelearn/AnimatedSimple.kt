@@ -2,12 +2,14 @@ package com.hcy.composelearn
 
 import androidx.compose.animation.*
 import androidx.compose.animation.core.MutableTransitionState
+import androidx.compose.animation.core.keyframes
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.Button
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -19,7 +21,9 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 /**
  * @author hcy
@@ -29,6 +33,7 @@ import androidx.compose.ui.unit.dp
 class AnimatedSimple {
 }
 
+@ExperimentalMaterialApi
 @ExperimentalAnimationApi
 @Composable
 fun animateSimple() {
@@ -242,7 +247,90 @@ fun animateSimple() {
                         Text(text = "-")
                     }
                 }
+            }
+        }
 
+        item {
+            var expanded by remember { mutableStateOf(false) }
+            Surface(
+                color = MaterialTheme.colors.surface,
+//                onClick = { expanded = !expanded }
+            ) {
+                AnimatedContent(
+                    targetState = expanded,
+                    transitionSpec = {
+                        fadeIn(animationSpec = tween(150, 150)) with
+                                fadeOut(animationSpec = tween(150)) using
+                                SizeTransform { initialSize, targetSize ->
+                                    if (targetState) {
+                                        keyframes {
+                                            // Expand horizontally first.
+                                            IntSize(targetSize.width, initialSize.height) at 150
+                                            durationMillis = 300
+                                        }
+                                    } else {
+                                        keyframes {
+                                            // Shrink vertically first.
+                                            IntSize(initialSize.width, targetSize.height) at 150
+                                            durationMillis = 300
+                                        }
+                                    }
+                                }
+                    }
+                ) { targetExpanded ->
+                    if (targetExpanded) {
+                        Expanded() {
+                            expanded = !expanded
+                        }
+                    } else {
+                        ContentIcon() {
+                            expanded = !expanded
+                        }
+                    }
+                }
+            }
+
+        }
+//        添加自定义动画
+        item {
+            var message by remember {
+                mutableStateOf("hello")
+            }
+//            animateContentSize
+            Box(
+                modifier = Modifier
+                    .background(Color.LightGray)
+                    .animateContentSize()
+            ) {
+                Column {
+                    Text(text = message.repeat(10), fontSize = 20.sp)
+//                    TextField(value = message, onValueChange = {
+//                        message = it
+//                    })
+                }
+            }
+        }
+
+//            Crossfadel
+        item {
+            var currentPage by remember {
+                mutableStateOf("A")
+            }
+            Column {
+                Crossfade(targetState = currentPage) { screen ->
+                    when (screen) {
+                        "A" -> Text(text = "pageA")
+                        "B" -> Text(text = "BBBBBBBpageB")
+                    }
+                }
+                Row {
+                    Button(onClick = { currentPage = "A" }) {
+                        Text(text = "A")
+                    }
+                    Button(onClick = { currentPage = "B" }) {
+                        Text(text = "B")
+                    }
+                }
             }
 
 
@@ -250,9 +338,60 @@ fun animateSimple() {
 
 
     }
-
 }
 
+
+@Composable
+fun ContentIcon(onclick: () -> Unit = {}) {
+    Surface(
+        modifier = Modifier
+            .size(40.dp),
+        elevation = 2.dp
+    ) {
+        Box(
+            Modifier
+                .background(
+                    Color(0xFF48D855)
+                )
+                .clickable { onclick() }
+
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.ic_back), contentDescription = "icon",
+                Modifier
+                    .fillMaxSize()
+                    .padding(10.dp)
+            )
+        }
+    }
+}
+
+@Composable
+fun Expanded(onclick: () -> Unit = {}) {
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .clickable { onclick() },
+        elevation = 2.dp
+    ) {
+        Box(
+            Modifier.background(
+                Color(0xFF48D855)
+            )
+        ) {
+
+            Text(
+                text = "这是展开状态".repeat(20),
+                color = Color.White,
+                modifier = Modifier.padding(10.dp)
+            )
+        }
+    }
+}
+
+
+@ExperimentalMaterialApi
 @ExperimentalAnimationApi
 @Preview(showSystemUi = true)
 @Composable
