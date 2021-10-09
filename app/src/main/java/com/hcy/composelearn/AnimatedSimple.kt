@@ -1,26 +1,21 @@
 package com.hcy.composelearn
 
 import androidx.compose.animation.*
-import androidx.compose.animation.core.MutableTransitionState
-import androidx.compose.animation.core.keyframes
-import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -36,7 +31,7 @@ class AnimatedSimple {
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi
 @Composable
-fun animateSimple() {
+fun AnimateSimple() {
     var editable by remember { mutableStateOf(true) }
     val state = remember {
         MutableTransitionState(false)
@@ -332,12 +327,126 @@ fun animateSimple() {
                     }
                 }
             }
+        }
+// 自定义动画
+//        AnimationSpec
+        item {
+            val alpha: Float by animateFloatAsState(
+                targetValue =
+                if (editable) 1f else 0.5f,
+//            Configure the animation duration and easing
+                animationSpec = tween(
+                    durationMillis = 300,
+                    easing = FastOutSlowInEasing
+                )
+            )
+//          spring
+            val value by animateFloatAsState(
+                targetValue = 1f,
+                animationSpec = spring(
+//                    定义弹簧弹性，默认值Spring.DampingRatioNoBouncy
+                    dampingRatio = Spring.DampingRatioHighBouncy,
+//                    定义弹簧应向结束移动速度，默认值为Spring.StiffnessMedium
+                    stiffness = Spring.StiffnessMedium
+                )
+            )
+//            tween 缓和曲线起始值和结束值之间添加动画效果
+            val value1 by animateFloatAsState(
+                targetValue =
+                1f,
+                animationSpec = tween(
+                    durationMillis = 300,
+                    delayMillis = 50,
+                    easing = LinearOutSlowInEasing
+                )
+            )
+//            keyframes 关键帧动画
+            val value2 by animateFloatAsState(targetValue = 1f,
+                animationSpec = keyframes {
+                    durationMillis = 375
+                    0.0f at 0 with LinearOutSlowInEasing//0-15ms
+                    0.2f at 15 with FastOutSlowInEasing
+                    0.4f at 75
+                    0.4f at 255
+                })
+//            repeatable 反复运行动画
+            val value3 by animateFloatAsState(
+                targetValue = 1f,
+                animationSpec = repeatable(
+                    iterations = 3,
+                    animation = tween(durationMillis = 300),
+                    repeatMode = RepeatMode.Reverse
+                )
+            )
+//            infiniteRepeatable 与 repeatable 类，但是会重复无限次
+            val value4 by animateFloatAsState(
+                targetValue = 1f,
+                animationSpec = infiniteRepeatable(
+                    animation = tween(durationMillis = 300),
+                    repeatMode = RepeatMode.Reverse
+                )
+            )
+//            snap 立即将值切换到结束值
+            val value5 by animateFloatAsState(
+                targetValue = 1f,
+                animationSpec = snap(delayMillis = 50)
+            )
+
+
+//            Easing 基于时长的 AnimationSpec 操作（如 tween 或 keyframes）使用 Easing 来调整动画的小数值。
+//            这样可让动画值加速和减速，而不是以恒定的速率移动。小数是介于 0（起始值）和 1.0（结束值）之间的值，表示动画中的当前点。
+            val CustomEasing = Easing { fraxtion ->
+                fraxtion * fraxtion
+            }
+            EasingUsage(easing = CustomEasing)
+
+//            AnimationVector
+//            但有时您需要为其他数据类型（包括您的自定义类型）添加动画效果。在动画播放期间，任何动画值都表示为 AnimationVector。
+//            使用相应的 TwoWayConverter 即可将值转换为 AnimationVector，反之亦然，这样一来，核心动画系统就可以统一对其进行处理
+
+            val IntToVector: TwoWayConverter<Int, AnimationVector1D> =
+                TwoWayConverter({
+                    AnimationVector1D(it.toFloat())
+                }, {
+                    it.value.toInt()
+                })
 
 
         }
 
 
     }
+}
+
+data class MySize(val width: Dp, val height: Dp)
+
+@Composable
+fun MyAnimation(targetSize: MySize) {
+    val animSize: MySize by animateValueAsState(
+        targetSize,
+        TwoWayConverter(
+            convertToVector = { size: MySize ->
+                // Extract a float value from each of the `Dp` fields.
+                AnimationVector2D(size.width.value, size.height.value)
+            },
+            convertFromVector = { vector: AnimationVector2D ->
+                MySize(vector.v1.dp, vector.v2.dp)
+            }
+        )
+    )
+}
+
+
+@Composable
+fun EasingUsage(easing: Easing) {
+    val value by animateFloatAsState(
+        targetValue = 1f,
+        animationSpec = tween(
+            durationMillis = 300,
+            easing = easing
+        )
+    )
+
 }
 
 
@@ -396,5 +505,5 @@ fun Expanded(onclick: () -> Unit = {}) {
 @Preview(showSystemUi = true)
 @Composable
 fun previewAnimateSimple() {
-    animateSimple()
+    AnimateSimple()
 }

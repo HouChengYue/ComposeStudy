@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -29,6 +30,7 @@ import com.hcy.composelearn.ui.theme.ComposeLearnTheme
 import com.hcy.composelearn.ui.theme.SimpleText
 
 class MainActivity : ComponentActivity() {
+    @OptIn(ExperimentalMaterialApi::class)
     @ExperimentalAnimationApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,7 +64,7 @@ class MainActivity : ComponentActivity() {
 
 //                SimpleText()
 //                ImageSample(modifier = Modifier.fillMaxSize())
-                animateSimple()
+                AnimateSimple()
 
             }
         }
