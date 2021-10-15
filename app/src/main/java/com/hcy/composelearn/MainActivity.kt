@@ -68,8 +68,8 @@ class MainActivity : ComponentActivity() {
 
 //                SimpleText()
 //                ImageSample(modifier = Modifier.fillMaxSize())
-                AnimateSimple()
-
+//                AnimateSimple()
+                ClickableSample()
             }
         }
     }
