@@ -30,7 +30,7 @@ import com.hcy.composelearn.ui.theme.ComposeLearnTheme
 import com.hcy.composelearn.ui.theme.SimpleText
 
 /**
- *github token  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
+ *github
  */
 
 class MainActivity : ComponentActivity() {
